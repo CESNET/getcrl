@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 # $Id$
-AC_INIT(getcrl, 1.8, sova@cesnet.cz)
+AC_INIT(getcrl, 1.10, sova@cesnet.cz)
 
 AC_DEFUN(REM_ARG_WITH,
 [AC_ARG_WITH([remote_$1],
@@ -15,58 +15,79 @@ AC_DEFUN(REM_ARG_WITH,
 
 
 # Checks for programs.
-AC_PATH_PROG(path_logger, logger,,[/bin:/usr/bin])
+AC_PATH_PROG(path_bash, bash,,[/bin:/usr/bin:/usr/local/bin])
+test -n "$path_bash" || AC_MSG_ERROR(no bash - exiting)
+
+AC_PATH_PROG(path_logger, logger,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_logger" || AC_MSG_ERROR(no logger - exiting)
 
-AC_PATH_PROG(path_cut, cut,,[/bin:/usr/bin])
+AC_PATH_PROG(path_cut, cut,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_cut" || AC_MSG_ERROR(no cut - exiting)
 
-AC_PATH_PROG(path_tr, tr,,[/bin:/usr/bin])
+AC_PATH_PROG(path_tr, tr,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_tr" || AC_MSG_ERROR(no tr - exiting)
 
-AC_PATH_PROG(path_ldapsearch, ldapsearch,,[/bin:/usr/bin])
+AC_PATH_PROG(path_ldapsearch, ldapsearch,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_ldapsearch" || AC_MSG_WARN([no ldapsearch - won't be able to download LDAP URLs])
 
-AC_PATH_PROG(path_wget, wget,,[/bin:/usr/bin])
+AC_PATH_PROG(path_wget, wget,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_wget" || AC_MSG_ERROR(no wget - exiting)
 
-AC_PATH_PROG(path_openssl, openssl,,[/bin:/usr/bin])
+AC_PATH_PROG(path_openssl, openssl,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_openssl" || AC_MSG_ERROR(no openssl - exiting)
 
-AC_PATH_PROG(path_mktemp, mktemp,,[/bin:/usr/bin])
+AC_PATH_PROG(path_mktemp, mktemp,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_mktemp" || AC_MSG_ERROR(no mktemp - exiting)
 
-AC_PATH_PROG(path_rm, rm,,[/bin:/usr/bin])
+AC_PATH_PROG(path_rm, rm,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_rm" || AC_MSG_ERROR(no rm - exiting)
 
-AC_PATH_PROG(path_cp, cp,,[/bin:/usr/bin])
+AC_PATH_PROG(path_cp, cp,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_cp" || AC_MSG_ERROR(no cp - exiting)
 
-AC_PATH_PROG(path_grep, grep,,[/bin:/usr/bin])
+AC_PATH_PROG(path_grep, grep,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_grep" || AC_MSG_ERROR(no grep - exiting)
 
-AC_PATH_PROG(path_date, date,,[/bin:/usr/bin])
+AC_PATH_PROG(path_date, date,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_date" || AC_MSG_ERROR(no date - exiting)
 
-AC_PATH_PROG(path_expr, expr,,[/bin:/usr/bin])
+AC_MSG_CHECKING(whether date is BSD alike)
+if $path_date -j -f '%b %d %T %Y %Z' '+%Y%m%d%H%M%S' 'Jan 21 22:13:20 2007 GMT' >/dev/null 2>&1
+then 
+  AC_MSG_RESULT(yes)
+  AC_SUBST(date_mode, bsd)
+else
+  AC_MSG_RESULT(no) 
+  AC_MSG_CHECKING(whether date is Linux alike)
+  if $path_date +%Y%m%d%H%M%S -d 'Jan 21 22:13:20 2007 GMT' >/dev/null 2>&1
+  then
+    AC_MSG_RESULT(yes)
+    AC_SUBST(date_mode, linux)
+  else
+    AC_MSG_RESULT(no)
+    AC_MSG_ERROR(Don't know more alternatives how to call date - exiting)
+  fi
+fi
+
+AC_PATH_PROG(path_expr, expr,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_expr" || AC_MSG_ERROR(no expr - exiting)
 
-AC_PATH_PROG(path_ls, ls,,[/bin:/usr/bin])
+AC_PATH_PROG(path_ls, ls,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_ls" || AC_MSG_ERROR(no ls - exiting)
 
-AC_PATH_PROG(path_sort, sort,,[/bin:/usr/bin])
+AC_PATH_PROG(path_sort, sort,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_sort" || AC_MSG_ERROR(no sort - exiting)
 
-AC_PATH_PROG(path_sed, sed,,[/bin:/usr/bin])
+AC_PATH_PROG(path_sed, sed,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_sed" || AC_MSG_ERROR(no sed - exiting)
 
-AC_PATH_PROG(path_true, true,,[/bin:/usr/bin])
+AC_PATH_PROG(path_true, true,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_true" || AC_MSG_ERROR(no true - exiting)
 
-AC_PATH_PROG(path_false, false,,[/bin:/usr/bin])
+AC_PATH_PROG(path_false, false,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_false" || AC_MSG_ERROR(no false - exiting)
 
-AC_PATH_PROG(path_test, test,,[/bin:/usr/bin])
+AC_PATH_PROG(path_test, test,,[/bin:/usr/bin:/usr/local/bin])
 test -n "$path_test" || AC_MSG_ERROR(no test - exiting)
 
 # Check for files
@@ -106,7 +127,6 @@ else
   AC_MSG_RESULT(ok)
 fi
 AC_SUBST(CRLDIR, $CRLDIR)
-
 
 
 # Checks for libraries.
