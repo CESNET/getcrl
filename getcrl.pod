@@ -53,6 +53,10 @@ B<getcrl.sh> returns one of the following exit values:
 
 Milan Sova
 
+=head1 DISTRIBUTION
+
+Program home: http://tools.cesnet-ca.cz/getcrl/
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2005 by Milan Sova, I<E<lt>sova@cesnet.czE<gt>>
