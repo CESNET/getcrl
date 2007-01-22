@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # $Id$
 
 PATH=/bin:/usr/bin
@@ -26,6 +26,7 @@ rm='/bin/rm'
 cp='/bin/cp'
 grep='/bin/grep'
 date='/bin/date'
+date_mode='linux'
 expr='/usr/bin/expr'
 ls='/bin/ls'
 test='/usr/bin/test'
@@ -178,7 +179,18 @@ function str2num() {
 function date2iso() {
     local rc
 
-    OUT=`$date +%Y%m%d%H%M%S -d "$1" 2>&1`
+    # Linux: date +%Y%m%d%H%M%S -d "$1"
+    # BSD:   date -j -f '%b %d %T %Y %Z' '+%Y%m%d%H%M%S' '$1'
+
+    case $date_mode in
+      bsd)
+        OUT=`$date -j -f '%b %d %T %Y %Z' '+%Y%m%d%H%M%S' "$1"`;
+        ;;
+      linux)
+        OUT=`date +%Y%m%d%H%M%S -d "$1"`;
+        ;;
+    esac
+
     rc=$?
     if $test $rc -ne 0
     then
@@ -244,7 +256,7 @@ syslog_s="-s"			# let's talk to stderr initially
 ERRSTAT=$eOPT			# error exit status for the first phase
 
 # get params
-TEMP=`getopt -o s -n"$0" -- "$@"`
+TEMP=`getopt s $*`
 if $test $? -ne 0 
 then
     die $ERRSTAT "$usage

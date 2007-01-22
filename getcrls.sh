@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # $Id$
 #
 # Sample script for installing multiple CRLs. It expects the list of URLs
@@ -66,7 +66,7 @@ syslog_s="-s"			# let's talk to stderr initially
 ERRSTAT=$eOPT			# error exit status for the first phase
 
 # get params
-TEMP=`getopt -o s -n"$0" -- "$@"`
+TEMP=`getopt s $*`
 if [ $? -ne 0 ]
 then
     die $ERRSTAT "$usage
