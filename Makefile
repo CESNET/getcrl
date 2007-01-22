@@ -1,7 +1,7 @@
 # $Id$
 
 PROJ := getcrl
-VERSION := 1.8
+VERSION := 1.10
 MANSECT:=8
 CENTER=" "
 POD2MANFLAGS = --section=$(MANSECT) --center=$(CENTER) 
@@ -14,7 +14,8 @@ MANS := $(PODS:.pod=.$(MANSECT))
 HTML := $(PODS:.pod=.html)
 TRANS := $(PRGS:=.transh)
 
-DISTS = $(MANS) $(PODS) $(HTML) $(SRCS) $(CFG) Makefile.in configure configure.in README
+DISTS = $(MANS) $(PODS) $(HTML) $(SRCS) $(CFG) Makefile.in configure configure.in README ChangeLog
+DIST_FILE := /tmp/getcrl-${VERSION}.tar.bz2
 
 prefix := /tmp/getcrl-1.10
 exec_prefix := ${prefix}
@@ -66,16 +67,35 @@ uninstall-man:
 transform: $(TRANS)
 
 clean:
-	-rm *.transh Makefile $(PRGS)
+	-rm -rf *.transh Makefile $(PRGS) autom4te.cache config.log config.status
 
 maintainer-clean: clean
 	-rm $(MANS) $(HTML)
+
+# tohle je sovi vyroba distribucniho balicku
 
 dist: DDIR := $(PROJ)-$(VERSION)
 
 dist: $(DISTS) 
 	mkdir $(DDIR) && cp $^ $(DDIR) && \
 	tar zcvf $(DDIR).tar.gz $(DDIR) && rm -rf $(DDIR)
+
+# tohle je moje vyroba distribucniho balicku
+${DIST_FILE}: ${DISTS}
+	(mkdir /tmp/getcrl-${VERSION}; \
+	 tar jcf ${DIST_FILE} ${DISTS}; \
+	 cd /tmp/getcrl-${VERSION}; \
+	 tar jxf ${DIST_FILE}; \
+	 find -type f -exec chmod 644 {} \; ; \
+	 chmod +x configure ; \
+	 find -type d -exec chmod 755 {} \; ; \
+	 cd ..; \
+	 tar -j -c --owner=root --group=staff -f ${DIST_FILE} --remove-files getcrl-${VERSION})
+
+tar: ${DIST_FILE}
+
+publish: tar
+	scp ${DIST_FILE} ${HTML} README ChangeLog root@tools.cesnet-ca.cz:/var/www/tools.cesnet-ca.cz/getcrl
 
 %.$(MANSECT): %.pod
 	pod2man $(POD2MANFLAGS) $< $@
