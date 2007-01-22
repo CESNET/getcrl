@@ -1,4 +1,17 @@
 2007-01-22  Jan Tomasek  <jan@tomasek.cz>
+	* Version: 1.10
+	* getcrls.sh.in: BSD getopt nezvladne `getopt -o s -n"$0" --
+	  "$@"`, takze se pouziva `getopt s $*` ktere chodi vsude.
+	* getcrl.sh.in: Upravena funkce date2iso aby pracovala s programem
+	  date podle toho jestli je na BSD nebo na Linuxu.  BSD getopt
+	  nezvladne `getopt -o s -n"$0" -- "$@"`, takze se pouziva `getopt s
+	  $*` ktere chodi vsude.
+	* configure.in: Pridan test na bash pro ktery jsou skripty
+	  napsany.  Do testu pridano hledani jestli software neni v
+	  /usr/local/bin.  BSD date ma jiny argumenty nez Linuxovy skript
+	  zkousi detekovat na jakou verzi narazil.
+
+2007-01-22  Jan Tomasek  <jan@tomasek.cz>
 	* Version: 1.9
 	* .cvsignore, Makefile, Makefile.in, README, configure,
 	  configure.in, getcrl.8, getcrl.html, getcrl.pod, getcrl.sh,
