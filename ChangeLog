@@ -1,0 +1,7 @@
+2007-01-22  Jan Tomasek  <jan@tomasek.cz>
+	* Version: 1.9
+	* .cvsignore, Makefile, Makefile.in, README, configure,
+	  configure.in, getcrl.8, getcrl.html, getcrl.pod, getcrl.sh,
+	  getcrl.sh.in, getcrls.sh, getcrls.sh.in:
+	    Puvodni verze 1.9 Milana Sovy.
+

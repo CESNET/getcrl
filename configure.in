@@ -1,0 +1,124 @@
+# Process this file with autoconf to produce a configure script.
+# $Id$
+AC_INIT(getcrl, 1.8, sova@cesnet.cz)
+
+AC_DEFUN(REM_ARG_WITH,
+[AC_ARG_WITH([remote_$1],
+  AC_HELP_STRING([--with-remote-$1],
+	[path to remote $1 (default is $2)]),
+    [ac_cv_use_remote_$1=$withval; zval=$withval],
+    [ac_cv_use_remote_$1=$2; zval=$2])
+  AC_CACHE_CHECK(path to remote $1, ac_cv_use_remote_$1, ac_cv_use_remote_$1=$zval)
+  AC_SUBST($3,$ac_cv_use_remote_$1)]
+)
+
+
+
+# Checks for programs.
+AC_PATH_PROG(path_logger, logger,,[/bin:/usr/bin])
+test -n "$path_logger" || AC_MSG_ERROR(no logger - exiting)
+
+AC_PATH_PROG(path_cut, cut,,[/bin:/usr/bin])
+test -n "$path_cut" || AC_MSG_ERROR(no cut - exiting)
+
+AC_PATH_PROG(path_tr, tr,,[/bin:/usr/bin])
+test -n "$path_tr" || AC_MSG_ERROR(no tr - exiting)
+
+AC_PATH_PROG(path_ldapsearch, ldapsearch,,[/bin:/usr/bin])
+test -n "$path_ldapsearch" || AC_MSG_WARN([no ldapsearch - won't be able to download LDAP URLs])
+
+AC_PATH_PROG(path_wget, wget,,[/bin:/usr/bin])
+test -n "$path_wget" || AC_MSG_ERROR(no wget - exiting)
+
+AC_PATH_PROG(path_openssl, openssl,,[/bin:/usr/bin])
+test -n "$path_openssl" || AC_MSG_ERROR(no openssl - exiting)
+
+AC_PATH_PROG(path_mktemp, mktemp,,[/bin:/usr/bin])
+test -n "$path_mktemp" || AC_MSG_ERROR(no mktemp - exiting)
+
+AC_PATH_PROG(path_rm, rm,,[/bin:/usr/bin])
+test -n "$path_rm" || AC_MSG_ERROR(no rm - exiting)
+
+AC_PATH_PROG(path_cp, cp,,[/bin:/usr/bin])
+test -n "$path_cp" || AC_MSG_ERROR(no cp - exiting)
+
+AC_PATH_PROG(path_grep, grep,,[/bin:/usr/bin])
+test -n "$path_grep" || AC_MSG_ERROR(no grep - exiting)
+
+AC_PATH_PROG(path_date, date,,[/bin:/usr/bin])
+test -n "$path_date" || AC_MSG_ERROR(no date - exiting)
+
+AC_PATH_PROG(path_expr, expr,,[/bin:/usr/bin])
+test -n "$path_expr" || AC_MSG_ERROR(no expr - exiting)
+
+AC_PATH_PROG(path_ls, ls,,[/bin:/usr/bin])
+test -n "$path_ls" || AC_MSG_ERROR(no ls - exiting)
+
+AC_PATH_PROG(path_sort, sort,,[/bin:/usr/bin])
+test -n "$path_sort" || AC_MSG_ERROR(no sort - exiting)
+
+AC_PATH_PROG(path_sed, sed,,[/bin:/usr/bin])
+test -n "$path_sed" || AC_MSG_ERROR(no sed - exiting)
+
+AC_PATH_PROG(path_true, true,,[/bin:/usr/bin])
+test -n "$path_true" || AC_MSG_ERROR(no true - exiting)
+
+AC_PATH_PROG(path_false, false,,[/bin:/usr/bin])
+test -n "$path_false" || AC_MSG_ERROR(no false - exiting)
+
+AC_PATH_PROG(path_test, test,,[/bin:/usr/bin])
+test -n "$path_test" || AC_MSG_ERROR(no test - exiting)
+
+# Check for files
+
+AC_ARG_WITH(apache-root,
+  AC_HELP_STRING([--with-apache-root],
+    [path to Apache2 configuration directory (default is /etc/apache2/)]),
+  [APAROOT=$withval],
+  [APAROOT=/etc/apache2])
+
+AC_ARG_WITH(crt-dir,
+  AC_HELP_STRING([--with-crt-dir],
+    [path to directory storing CA certificates for Apache2 (default is apache-root/ssl.crt)]),
+  [CRTDIR=$withval],
+  [CRTDIR=$APAROOT/ssl.crt])
+
+AC_ARG_WITH(crl-dir,
+  AC_HELP_STRING([--with-crl-dir],
+    [path to directory storing CA revocation lists for Apache2 (default is apache-root/ssl.crl)]),
+  [CRLDIR=$withval],
+  [CRLDIR=$APAROOT/ssl.crl])
+
+AC_MSG_CHECKING(Apache2 CRT directory)
+if ! test -d "$CRTDIR"
+then
+  AC_MSG_ERROR($CRTDIR is not a directory)
+else
+  AC_MSG_RESULT(ok)
+fi
+AC_SUBST(CRTDIR, $CRTDIR)
+
+AC_MSG_CHECKING(Apache2 CRL directory)
+if ! test -d "$CRLDIR"
+then
+  AC_MSG_ERROR($CRLDIR is not a directory)
+else
+  AC_MSG_RESULT(ok)
+fi
+AC_SUBST(CRLDIR, $CRLDIR)
+
+
+
+# Checks for libraries.
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES(getcrl.sh,[chmod +x getcrl.sh])
+AC_CONFIG_FILES(getcrls.sh,[chmod +x getcrls.sh])
+AC_OUTPUT

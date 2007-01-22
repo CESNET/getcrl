@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>getcrl</title>
+<link rev="made" href="mailto:sova@sova1.local" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<li><a href="#return_value">RETURN VALUE</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+	<li><a href="#history">HISTORY</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>getcrl.sh - CRL downloader and installer</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p><strong>getcrl.sh</strong> [<strong>-s</strong>] URL</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><strong>getcrl.sh</strong> downloads a CRL from the <em>URL</em>, verifies it against root
+certificates directory and installs it into a CRL directory for use of
+<strong>OpenSSL</strong>-based applications. Both direcotries use the <strong>OpenSSL</strong> directory
+structure (see <em>x509(1)</em>, <em>crl(1)</em>).</p>
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
+<dl>
+<dt><strong><a name="item__2ds"><strong>-s</strong></a></strong><br />
+</dt>
+<dd>
+<pre>
+
+Log output messages to standard error, as well as the system log. unless
+this option is set no output is generated which is suitable for L&lt;cron(8)&gt;
+jobs.</pre>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="return_value">RETURN VALUE</a></h1>
+<p><strong>getcrl.sh</strong> returns one of the following exit values:</p>
+<ol>
+<li><strong><a name="item_success_2e"><strong>0</strong> Success.</a></strong><br />
+</li>
+<li><strong><a name="item_error_in_options_and_2for_arguments"><strong>1</strong> Error in options and/or arguments</a></strong><br />
+</li>
+<li><strong><a name="item_error_creating_temporary_working_directory"><strong>2</strong> Error creating temporary working directory</a></strong><br />
+</li>
+<li><strong><a name="item_error_downloading_the_crl"><strong>3</strong> Error downloading the CRL</a></strong><br />
+</li>
+<li><strong><a name="item_error_parsing_the_crl"><strong>4</strong> Error parsing the CRL</a></strong><br />
+</li>
+<li><strong><a name="item_the_crl_could_not_be_verified"><strong>5</strong> The CRL could not be verified</a></strong><br />
+</li>
+<li><strong><a name="item_the_crl_could_not_be_installed"><strong>6</strong> The CRL could not be installed</a></strong><br />
+</li>
+</ol>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Milan Sova</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>Copyright 2005 by Milan Sova, <em>&lt;<a href="mailto:sova@cesnet.cz">sova@cesnet.cz</a>&gt;</em></p>
+<p>This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.</p>
+<p>
+</p>
+<hr />
+<h1><a name="history">HISTORY</a></h1>
+<p>$Revision$
+</p>
+
+</body>
+
+</html>

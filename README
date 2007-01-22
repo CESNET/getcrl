@@ -1,0 +1,19 @@
+README for getcrl
+# $Id$
+
+INSTALLATION
+
+1)
+./configure --with-apache-root=apache_config_dir
+
+or
+
+./configure --with-crt-dir=apache_cert_directory --with-crl-dir=apache_CRL_directory
+
+2)
+
+make
+
+3) 
+su
+make install

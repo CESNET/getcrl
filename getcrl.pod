@@ -1,0 +1,76 @@
+# $id$
+
+=head1 NAME
+
+getcrl.sh - CRL downloader and installer
+
+=head1 SYNOPSIS
+
+B<getcrl.sh> [B<-s>] URL
+
+=head1 DESCRIPTION
+
+B<getcrl.sh> downloads a CRL from the I<URL>, verifies it against root
+certificates directory and installs it into a CRL directory for use of
+B<OpenSSL>-based applications. Both direcotries use the B<OpenSSL> directory
+structure (see L<x509(1)>, L<crl(1)>).
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-s>
+  
+Log output messages to standard error, as well as the system log. unless
+this option is set no output is generated which is suitable for L<cron(8)>
+jobs.
+
+=back
+
+=head1 RETURN VALUE
+
+B<getcrl.sh> returns one of the following exit values:
+
+=over
+
+=item B<0> Success.
+
+=item B<1> Error in options and/or arguments
+
+=item B<2> Error creating temporary working directory
+
+=item B<3> Error downloading the CRL
+
+=item B<4> Error parsing the CRL
+
+=item B<5> The CRL could not be verified
+
+=item B<6> The CRL could not be installed
+
+=back
+
+=head1 AUTHOR
+
+Milan Sova
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2005 by Milan Sova, I<E<lt>sova@cesnet.czE<gt>>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+=head1 HISTORY
+
+$Revision$
