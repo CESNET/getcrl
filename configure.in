@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 # $Id$
-AC_INIT(getcrl, 1.10, sova@cesnet.cz)
+AC_INIT(getcrl, 1.11, sova@cesnet.cz)
 
 AC_DEFUN(REM_ARG_WITH,
 [AC_ARG_WITH([remote_$1],
