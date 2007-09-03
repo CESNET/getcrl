@@ -1,3 +1,9 @@
+2007-09-03  Jan Tomasek  <jan@tomasek.cz>
+	* Version: 1.11
+	* Makefile.in:
+	    Fixed typo in installdirs: sysconfigdir -> sysconfdir.
+	    Added missing space after "do" in install-prgs.
+
 2007-01-22  Jan Tomasek  <jan@tomasek.cz>
 	* Version: 1.10
 	* getcrls.sh.in: BSD getopt nezvladne `getopt -o s -n"$0" --
