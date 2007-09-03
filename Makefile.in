@@ -36,12 +36,12 @@ installdirs:
 	install -d -groot -oroot $(prefix);\
 	install -d -groot -oroot $(exec_prefix);\
 	install -d -groot -oroot $(sbindir);\
-	install -d -groot -oroot $(sysconfigdir);\
+	install -d -groot -oroot $(sysconfdir);\
 	install -d -groot -oroot $(mandir);\
 	install -d -groot -oroot $(mandir)/man$(MANSECT);\
 
 install-prgs: $(TRANS)
-	for i in $(TRANS); do\
+	for i in $(TRANS); do \
 	install -groot -oroot -m0755 $$i $(sbindir)/`basename $$i .transh`;\
 	rm $$i;\
 	done
