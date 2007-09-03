@@ -1,7 +1,7 @@
 # $Id$
 
 PROJ := getcrl
-VERSION := 1.10
+VERSION := 1.11
 MANSECT:=8
 CENTER=" "
 POD2MANFLAGS = --section=$(MANSECT) --center=$(CENTER) 
@@ -17,7 +17,7 @@ TRANS := $(PRGS:=.transh)
 DISTS = $(MANS) $(PODS) $(HTML) $(SRCS) $(CFG) Makefile.in configure configure.in README ChangeLog
 DIST_FILE := /tmp/getcrl-${VERSION}.tar.bz2
 
-prefix := /tmp/getcrl-1.10
+prefix := /usr/local
 exec_prefix := ${prefix}
 sbindir := ${exec_prefix}/sbin
 mandir := ${prefix}/share/man
@@ -36,12 +36,12 @@ installdirs:
 	install -d -groot -oroot $(prefix);\
 	install -d -groot -oroot $(exec_prefix);\
 	install -d -groot -oroot $(sbindir);\
-	install -d -groot -oroot $(sysconfigdir);\
+	install -d -groot -oroot $(sysconfdir);\
 	install -d -groot -oroot $(mandir);\
 	install -d -groot -oroot $(mandir)/man$(MANSECT);\
 
 install-prgs: $(TRANS)
-	for i in $(TRANS); do\
+	for i in $(TRANS); do \
 	install -groot -oroot -m0755 $$i $(sbindir)/`basename $$i .transh`;\
 	rm $$i;\
 	done
